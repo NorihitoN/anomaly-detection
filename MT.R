@@ -12,6 +12,13 @@ rownames(road)
 ggplot(road, aes(y=rownames(road), x=deaths)) + 
   geom_bar(stat = "identity")
 
+X <- road / road$drivers
+X <- as.matrix(log(X[,-2] + 1))
+mx <- colMeans(X)
+Xc <- X - matrix(1, nrow(X), 1) %*% mx
+Sx <- t(Xc) %*% Xc / nrow(X)
+a <- rowSums((Xc %*% solve(Sx)) * Xc) / ncol(X)
+
 # Davis %>% select(weight)
 # 
 # ggplot(Davis, aes(x=weight)) + geom_histogram()
