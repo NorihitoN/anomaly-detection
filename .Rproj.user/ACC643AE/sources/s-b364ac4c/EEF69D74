@@ -10,9 +10,9 @@
     "source_on_save": false,
     "relative_order": 1,
     "properties": {
-        "cursorPosition": "20,0",
+        "cursorPosition": "7,0",
         "scrollLine": "0",
-        "marks": "<:7,0\n>:7,0"
+        "marks": "<:7,0\n>:10,-1"
     },
     "folds": "",
     "lastKnownWriteTime": 1606372689,

@@ -18,19 +18,13 @@ mx <- colMeans(X)
 Xc <- X - matrix(1, nrow(X), 1) %*% mx
 Sx <- t(Xc) %*% Xc / nrow(X)
 a <- rowSums((Xc %*% solve(Sx)) * Xc) / ncol(X)
+a
+ggplot(NULL, aes(y=a, x = seq(1,length(a)))) +
+      geom_point(alpha = 1/5) +
+      geom_hline(yintercept = 1, colour = "red", linetype = "dashed")
 
-# Davis %>% select(weight)
-# 
-# ggplot(Davis, aes(x=weight)) + geom_histogram()
-# 
-# mu <- mean(Davis$weight)
-# s2 <- mean((Davis$weight - mu)^2)
-# c(mu, s2)
-# 
-# 
-# # 異常度の計算
-# a <- (Davis$weight - mu)^2 / s2
-# th <- qchisq(.99, 1)
-# ggplot(NULL, aes(y=a, x = seq(1,length(a)))) + 
-#       geom_point(alpha = 1/5) + 
-#       geom_hline(yintercept = th, colour = "red", linetype = "dashed")
+xc_prime <- Xc["Calif",]
+SN1 <- 10*log10(xc_prime^2/diag(Sx))
+ggplot(NULL, aes(x=reorder(names(SN1), SN1), y=SN1, fill = SN1)) + 
+  geom_bar(stat = "identity")
+
