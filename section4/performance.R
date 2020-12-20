@@ -33,3 +33,5 @@ for(i in c(1:n_total)) {
 plot(score_sorted, type = 'l', recalls)
 par(new = TRUE)
 plot(score_sorted, type = 'l', specifs)
+
+plot(1-specifs, recalls, type="b")
