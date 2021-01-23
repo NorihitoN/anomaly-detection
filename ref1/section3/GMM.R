@@ -1,15 +1,16 @@
 #########################################
-# file  : EM_algorithm.R
+# file  : GMM.R
 # auther: norih
 # date  : Dec 14th, 2020
+# GMM is gaussian mixture model.
 # Expectation-maximization algorithm is one of the algorithm
 # which estimate maximum likelihood
 #########################################
-
+library(tidyverse)
 # samples comes from mixture gaussian model
 # signal: mu0 = 3, sig0 = 0.5, pi0 = 0.6
 # noise: mu1 = 0, sig1 = 3, pi1 = 0.4
-set.seed(57)
+set.seed(50)
 N <- 1000
 mu0 = 3
 sig0= 0.5
@@ -23,6 +24,14 @@ data <- rep(-99, N)
 data[which(X == 0)] <- rnorm(length(which(X == 0)), mu0, sig0)
 data[which(X == 1)] <- rnorm(length(which(X == 1)), mu1, sig1)
 
+x0 <- seq(-5,10,.1)
+y0 <- pi0 * dnorm(x0,mu0,sig0) + pi1 * dnorm(x0,mu1,sig1)
+p <- ggplot(NULL, aes(x = data)) +
+      geom_histogram(aes(y=..density..),      # Histogram with density instead of count on y-axis
+                     binwidth=.5,
+                     colour="black", alpha=.2, fill="#FF6666") +
+      geom_line(aes(x=x0, y=y0), size = .5, linetype="dashed")
+ggsave("./ref1/section3/fig4.1.png", plot = p)
 
 # EM method to estimate (pi0, pi1), (mu0, sig0), (mu1, sig1)
 # Initial condition
@@ -48,3 +57,11 @@ for(i in 1:20) {
 }
 
 paste(mu0, sig0, pi0, mu1, sig1, pi1, sep=",")
+
+x1 <- seq(-5,10,.1)
+y1 <- pi0 * dnorm(x1,mu0,sig0) + pi1 * dnorm(x1,mu1,sig1)
+
+df <- data.frame(x = x0, original = y0, estimate = y1)
+df %>% pivot_longer(cols = -x, names_to = "type", values_to = "value") %>% 
+  ggplot()+geom_line(aes(x=x, y=value, color=type), size = .5)
+ggsave("./ref1/section3/fig4.2.png")
