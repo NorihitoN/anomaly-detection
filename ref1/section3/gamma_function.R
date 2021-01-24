@@ -42,4 +42,4 @@ p2 <- ggplot(NULL, aes(y=a, seq(1, length(a)))) +
 library(gridExtra)
 g <- gridExtra::grid.arrange(p1, p2, nrow = 1)
 
-ggsave("./ref1/section3/fig3.1.png", plot = g)
+ggsave("./ref1/section3/fig3.1_gamma.png", plot = g)

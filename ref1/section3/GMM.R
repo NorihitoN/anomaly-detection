@@ -31,7 +31,7 @@ p <- ggplot(NULL, aes(x = data)) +
                      binwidth=.5,
                      colour="black", alpha=.2, fill="#FF6666") +
       geom_line(aes(x=x0, y=y0), size = .5, linetype="dashed")
-ggsave("./ref1/section3/fig4.1.png", plot = p)
+ggsave("./ref1/section3/fig3.2_GMM.png", plot = p)
 
 # EM method to estimate (pi0, pi1), (mu0, sig0), (mu1, sig1)
 # Initial condition
@@ -64,4 +64,4 @@ y1 <- pi0 * dnorm(x1,mu0,sig0) + pi1 * dnorm(x1,mu1,sig1)
 df <- data.frame(x = x0, original = y0, estimate = y1)
 df %>% pivot_longer(cols = -x, names_to = "type", values_to = "value") %>% 
   ggplot()+geom_line(aes(x=x, y=value, color=type), size = .5)
-ggsave("./ref1/section3/fig4.2.png")
+ggsave("./ref1/section3/fig3.3_GMM.png")
